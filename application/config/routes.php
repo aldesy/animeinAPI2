@@ -87,5 +87,6 @@ $route['animes'] = 'anime/userListing';
 $route['editAnime/(:num)'] = "anime/editAnime/$1";
 $route['editAnim'] = "anime/editAnim";
 $route['addNewAnime'] = "anime/addNew";
+$route['submitNewAnime'] = "anime/submitNewAnime";
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

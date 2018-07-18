@@ -48,12 +48,16 @@ class Anime_model extends CI_Model {
         return TRUE;
     }
 
-    public function insert_entry()
+    function add_new_anime($animeinfo)
     {
-        $this->title    = $_POST['title']; // please read the below note
-        $this->content  = $_POST['content'];
-
-        $this->db->insert('entries', $this);
+        $this->db->trans_start();
+        $this->db->insert('tbl_animes', $animeinfo);
+        
+        $insert_id = $this->db->insert_id();
+        
+        $this->db->trans_complete();
+        
+        return $insert_id;
     }
 
     public function update_entry()

@@ -99,7 +99,7 @@ class Anime extends BaseController
     /**
      * This function is used to add new user to the system
      */
-    function addNewUser()
+    function submitNewAnime()
     {
         if($this->isAdmin() == TRUE)
         {
@@ -109,12 +109,8 @@ class Anime extends BaseController
         {
             $this->load->library('form_validation');
             
-            $this->form_validation->set_rules('fname','Full Name','trim|required|max_length[128]');
-            $this->form_validation->set_rules('email','Email','trim|required|valid_email|max_length[128]');
-            $this->form_validation->set_rules('password','Password','required|max_length[20]');
-            $this->form_validation->set_rules('cpassword','Confirm Password','trim|required|matches[password]|max_length[20]');
-            $this->form_validation->set_rules('role','Role','trim|required|numeric');
-            $this->form_validation->set_rules('mobile','Mobile Number','required|min_length[10]');
+            $this->form_validation->set_rules('title','Title','trim|required|max_length[128]');
+            $this->form_validation->set_rules('view','Views','trim|required|max_length[128]');
             
             if($this->form_validation->run() == FALSE)
             {
@@ -122,28 +118,24 @@ class Anime extends BaseController
             }
             else
             {
-                $name = ucwords(strtolower($this->security->xss_clean($this->input->post('fname'))));
-                $email = $this->security->xss_clean($this->input->post('email'));
-                $password = $this->input->post('password');
-                $roleId = $this->input->post('role');
-                $mobile = $this->security->xss_clean($this->input->post('mobile'));
+                $title = ucwords(strtolower($this->security->xss_clean($this->input->post('title'))));
+                $view = $this->security->xss_clean($this->input->post('view'));
                 
-                $userInfo = array('email'=>$email, 'password'=>getHashedPassword($password), 'roleId'=>$roleId, 'name'=> $name,
-                                    'mobile'=>$mobile, 'createdBy'=>$this->vendorId, 'createdDtm'=>date('Y-m-d H:i:s'));
+                $animeinfo = array('title'=>$title, 'view'=>$view);
                 
-                $this->load->model('user_model');
-                $result = $this->user_model->addNewUser($userInfo);
+                $this->load->model('anime_model');
+                $result = $this->anime_model->add_new_anime($animeinfo);
                 
                 if($result > 0)
                 {
-                    $this->session->set_flashdata('success', 'New User created successfully');
+                    $this->session->set_flashdata('success', 'New Anime created successfully');
                 }
                 else
                 {
-                    $this->session->set_flashdata('error', 'User creation failed');
+                    $this->session->set_flashdata('error', 'Anime creation failed');
                 }
                 
-                redirect('addNew');
+                redirect('addNewAnime');
             }
         }
     }
