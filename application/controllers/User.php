@@ -18,6 +18,7 @@ class User extends BaseController
     {
         parent::__construct();
         $this->load->model('user_model');
+        $this->load->model('anime_model');
         $this->isLoggedIn();   
     }
     
@@ -27,8 +28,9 @@ class User extends BaseController
     public function index()
     {
         $this->global['pageTitle'] = 'CodeInsect : Dashboard';
-        
-        $this->loadViews("dashboard", $this->global, NULL , NULL);
+        $count = $this->anime_model->get_animes_count('');
+        $data['animecount'] = $count;
+        $this->loadViews("dashboard", $this->global, $data , NULL);
     }
     
     /**
