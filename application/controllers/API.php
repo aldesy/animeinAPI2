@@ -39,6 +39,21 @@ class API extends BaseController
         exit;
     }
 
+    public function GetAllAnimesMinim()
+    {
+
+        $response = array(
+            'success' => true,
+            'data' => $this->anime_model->api_get_animes_minim());
+      
+        $this->output
+        ->set_status_header(200)
+        ->set_content_type('application/json', 'utf-8')
+        ->set_output(json_encode($response, JSON_PRETTY_PRINT))
+        ->_display();
+        exit;
+    }
+
     public function GetAnimeByID($animeid = NULL)
     {
         $data = $this->anime_model->get_anime_info($animeid);

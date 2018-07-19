@@ -6,6 +6,7 @@ class Anime_model extends CI_Model {
     public $sinopsis;
     public $status;
     public $image;
+    public $imgbackground;
     public $view;
     
     public function get_animes($searchText = '', $page, $segment)
@@ -70,6 +71,15 @@ class Anime_model extends CI_Model {
     function api_get_animes()
     {
         $this->db->select('*');
+        $this->db->from('tbl_animes');
+        $this->db->order_by("status", "desc");
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    function api_get_animes_minim()
+    {
+        $this->db->select('animeid, title, sinopsis, image, view');
         $this->db->from('tbl_animes');
         $this->db->order_by("status", "desc");
         $query = $this->db->get();
