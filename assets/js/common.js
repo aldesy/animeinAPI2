@@ -33,6 +33,29 @@ jQuery(document).ready(function(){
 		
 	});
 
+	jQuery(document).on("click", ".deleteAnime", function(){
+		var animeId = $(this).data("animeid"),
+			hitURL = baseURL + "anime/deleteAnime",
+			currentRow = $(this);
+		
+		var confirmation = confirm("Are you sure to delete this Anime ?");
+		if(confirmation)
+		{
+			jQuery.ajax({
+			type : "POST",
+			dataType : "json",
+			url : hitURL,
+			data : { animeId : animeId } 
+			}).done(function(data){
+				console.log(data);
+				currentRow.parents('tr').remove();
+				if(data.status = true) { alert("Anime successfully deleted"); }
+				else if(data.status = false) { alert("Anime deletion failed"); }
+				else { alert("Access denied..!"); }
+			});
+		}
+	});
+
 	jQuery(document).on("click", ".deleteEpisode", function(){
 		var episodeId = $(this).data("episodeid"),
 			hitURL = baseURL + "episode/deleteEpisode",
