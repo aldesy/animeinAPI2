@@ -110,6 +110,12 @@
               </a>
             </li>
             <li class="treeview">
+              <a href="<?php echo base_url(); ?>episodes">
+                <i class="fa fa-users"></i>
+                <span>Episodes</span>
+              </a>
+            </li>
+            <li class="treeview">
               <a href="<?php echo base_url(); ?>API/GetAnimes" >
                 <i class="fa fa-plane"></i>
                 <span>API</span>

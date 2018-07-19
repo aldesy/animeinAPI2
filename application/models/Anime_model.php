@@ -23,6 +23,15 @@ class Anime_model extends CI_Model {
         return $query->result();
     }
 
+    public function get_animes_normal()
+    {
+        $this->db->select('*');
+        $this->db->from('tbl_animes');
+        $this->db->order_by("title", "desc");
+        $query = $this->db->get();
+        return $query->result();
+    }
+
     public function get_animes_count($searchText = '')
     {
         $this->db->select('*');
@@ -79,7 +88,7 @@ class Anime_model extends CI_Model {
 
     function api_get_animes_minim()
     {
-        $this->db->select('animeid, title, sinopsis, image, view');
+        $this->db->select('animeid, title, status, sinopsis, image, view');
         $this->db->from('tbl_animes');
         $this->db->order_by("status", "desc");
         $query = $this->db->get();

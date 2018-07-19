@@ -89,7 +89,9 @@ $route['editAnim'] = "anime/editAnim";
 $route['addNewAnime'] = "anime/addNew";
 $route['submitNewAnime'] = "anime/submitNewAnime";
 
+$route['episodes'] = 'episode';
+
 $route['API/GetAnimes'] = "API/GetAllAnimesMinim";
-$route['API/GetAnime/(:num)'] = "API/GetAnimeById/$1";
+$route['API/GetAnime/(.+)'] = "API/GetAnimeById/$1";
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

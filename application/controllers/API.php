@@ -18,6 +18,7 @@ class API extends BaseController
     {
         parent::__construct();
         $this->load->model('anime_model');
+        $this->load->model('episode_model');
      //   $this->isLoggedIn();   
     }
     
@@ -69,6 +70,22 @@ class API extends BaseController
         exit;
     }
     
+
+    //EPISODE
+    public function GetAllEpisodes($animeid)
+    {
+        $data = $this->episode_model->api_get_all_episodes($animeid);
+        $response = array(
+            'success' => true,
+            'data' => $data);
+      
+        $this->output
+        ->set_status_header(200)
+        ->set_content_type('application/json', 'utf-8')
+        ->set_output(json_encode($response, JSON_PRETTY_PRINT))
+        ->_display();
+        exit;
+    }
     
 }
 
