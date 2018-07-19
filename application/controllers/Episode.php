@@ -243,7 +243,7 @@ class Episode extends BaseController
      * This function is used to delete the user using userId
      * @return boolean $result : TRUE / FALSE
      */
-    function deleteUser()
+    function deleteEpisode()
     {
         if($this->isAdmin() == TRUE)
         {
@@ -251,10 +251,9 @@ class Episode extends BaseController
         }
         else
         {
-            $userId = $this->input->post('userId');
-            $userInfo = array('isDeleted'=>1,'updatedBy'=>$this->vendorId, 'updatedDtm'=>date('Y-m-d H:i:s'));
+            $episodeId = $this->input->post('episodeId');
             
-            $result = $this->user_model->deleteUser($userId, $userInfo);
+            $result = $this->episode_model->delete_episode($episodeId);
             
             if ($result > 0) { echo(json_encode(array('status'=>TRUE))); }
             else { echo(json_encode(array('status'=>FALSE))); }

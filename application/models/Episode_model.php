@@ -5,13 +5,14 @@ class Episode_model extends CI_Model {
     //WEB
     public function get_episodes($searchText = '', $page, $segment)
     {
-        $this->db->select('*');
-        $this->db->from('tbl_episodes');
+        $this->db->select('Episode.*, Anime.title as animetitle');
+        $this->db->from('tbl_episodes as Episode');
+        $this->db->join('tbl_animes as Anime', 'Episode.anime = Anime.animeid','left');
         if(!empty($searchText)) {
-            $likeCriteria = "title  LIKE '%".$searchText."%'";
+            $likeCriteria = "Anime.title  LIKE '%".$searchText."%'";
             $this->db->where($likeCriteria);
         }
-        $this->db->order_by("episodenumber", "desc");
+        $this->db->order_by("animetitle asc, episodenumber asc");
         $this->db->limit($page, $segment);
         $query = $this->db->get();
         return $query->result();
@@ -39,6 +40,12 @@ class Episode_model extends CI_Model {
         $this->db->trans_complete();
         
         return $insert_id;
+    }
+
+    function delete_episode($episodeId)
+    {
+        $this->db->where('episodeid', $episodeId);
+        $this->db->delete('tbl_episodes'); 
     }
 
     //APIGET

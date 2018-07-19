@@ -20,7 +20,7 @@
                 <div class="box-header">
                     <h3 class="box-title">Episodes List</h3>
                     <div class="box-tools">
-                        <form action="<?php echo base_url() ?>animes" method="POST" id="searchList">
+                        <form action="<?php echo base_url() ?>episodes" method="POST" id="searchList">
                             <div class="input-group">
                               <input type="text" name="searchText" value="<?php echo $searchText; ?>" class="form-control input-sm pull-right" style="width: 150px;" placeholder="Search"/>
                               <div class="input-group-btn">
@@ -34,6 +34,8 @@
                   <table class="table table-hover">
                     <tr>
                       <th>Id</th>
+                      <th>Anime</th>
+                      <th>Episode</th>
                       <th>Title</th>
                       <th class="text-center">Actions</th>
                     </tr>
@@ -46,11 +48,15 @@
                     ?>
                     <tr>
                       <td><?php echo $record->episodeid ?></td>
+                      <td><?php echo $record->animetitle ?></td>
+                      <td><?php echo $record->episodenumber ?></td>
                       <td><?php echo $record->title ?></td>
                       <td class="text-center">| 
                           <a class="btn btn-sm btn-info" href="<?php echo base_url().'editAnime/'.$record->episodeid; ?>" title="Edit"><i class="fa fa-pencil"></i></a>
-                          <a class="btn btn-sm btn-danger deleteUser" href="#" data-episodeid="<?php echo $record->episodeid; ?>" title="Delete"><i class="fa fa-trash"></i></a>
-                      </td>
+                          <a class="btn btn-sm btn-danger deleteEpisode" href="#" data-episodeid="<?php echo $record->episodeid; ?>" title="Delete"><i class="fa fa-trash"></i></a>
+                         
+                  
+                        </td>
                     </tr>
                     <?php
                         }
