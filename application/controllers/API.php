@@ -27,10 +27,10 @@ class API extends BaseController
      */
     public function GetAllAnimes()
     {
-
+        $data = $this->anime_model->api_get_animes();
         $response = array(
             'success' => true,
-            'data' => $this->anime_model->api_get_animes());
+            'data' => $data);
       
         $this->output
         ->set_status_header(200)
@@ -42,10 +42,10 @@ class API extends BaseController
 
     public function GetAllAnimesMinim()
     {
-
+        $data = $this->anime_model->api_get_animes_minim();
         $response = array(
             'success' => true,
-            'data' => $this->anime_model->api_get_animes_minim());
+            'data' => $data);
       
         $this->output
         ->set_status_header(200)
@@ -57,10 +57,14 @@ class API extends BaseController
 
     public function GetAnimeByID($animeid = NULL)
     {
-        $data = $this->anime_model->get_anime_info($animeid);
+        $animes = $this->anime_model->get_anime_info($animeid);
+        foreach($animes as $anime)
+        {
+            $anime->episodes = $this->episode_model->api_get_all_episodes($animeid);;
+        }
         $response = array(
             'success' => true,
-            'data' => $data);
+            'data' => $animes);
       
         $this->output
         ->set_status_header(200)
