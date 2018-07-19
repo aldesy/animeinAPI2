@@ -64,4 +64,19 @@ class Anime_model extends CI_Model {
         return $insert_id;
     }
 
+
+
+    //APIGET
+    function api_get_animes()
+    {
+        $this->db->select('*');
+        $this->db->from('tbl_animes');
+        $this->db->order_by("status", "desc");
+        $query = $this->db->get();
+        return $query->result();
+    }
+    
 }
+
+
+
