@@ -30,6 +30,24 @@ class Episode_model extends CI_Model {
         return $query->num_rows();
     }
 
+    function edit_episode($episodeinfo, $episodeid)
+    {
+        $this->db->where('episodeid', $episodeid);
+        $this->db->update('tbl_episodes', $episodeinfo);
+        
+        return TRUE;
+    }
+
+    function get_episode_info($episodeid)
+    {
+        $this->db->select('*');
+        $this->db->from('tbl_episodes');
+        $this->db->where('episodeid', $episodeid);
+        $query = $this->db->get();
+        
+        return $query->result();
+    }
+
     function add_new_episode($episodeinfo)
     {
         $this->db->trans_start();

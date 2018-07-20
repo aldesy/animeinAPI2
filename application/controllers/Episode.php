@@ -148,36 +148,28 @@ class Episode extends BaseController
     }
 
     
-    /**
-     * This function is used load user edit information
-     * @param number $userId : Optional : This is user id
-     */
-    function editAnime($animeid = NULL)
+    function editEpisode($episodeid = NULL)
     {
-        if($this->isAdmin() == TRUE || $animeid == 1)
+        if($this->isAdmin() == TRUE || $episodeid == 1)
         {
             $this->loadThis();
         }
         else
         {
-            if($animeid == null)
+            if($episodeid == null)
             {
-                redirect('animes');
+                redirect('episode');
             }
             
-            $data['animeInfo'] = $this->anime_model->get_anime_info($animeid);
-            
+            $data['episodeInfo'] = $this->episode_model->get_episode_info($episodeid);
+            $data['animeRecords'] = $this->anime_model->get_animes_normal();
+
             $this->global['pageTitle'] = 'CodeInsect : Edit Anime';
             
-            $this->loadViews("editAnime", $this->global, $data, NULL);
+            $this->loadViews("episode/editEpisode", $this->global, $data, NULL);
         }
     }
-    
-    
-    /**
-     * This function is used to edit the user information
-     */
-    function editAnim()
+    function SubmitEditEpisode()
     {
         if($this->isAdmin() == TRUE)
         {
@@ -187,52 +179,43 @@ class Episode extends BaseController
         {
             $this->load->library('form_validation');
             
-            $animeid = $this->input->post('animeid');
-            
+            $episodeid = $this->input->post('episodeid');
+
             $this->form_validation->set_rules('title','Title','trim|required|max_length[128]');
-            $this->form_validation->set_rules('sinopsis','Sinopsis','required|max_length[200]');
-            $this->form_validation->set_rules('image','Image','required|max_length[200]');
-            $this->form_validation->set_rules('imgbackground','Image Background','required|max_length[200]');
-            $this->form_validation->set_rules('view','View','required|min_length[1]');
-            
+            $this->form_validation->set_rules('episodenumber','Episode Number','trim|required|max_length[128]');
+            $this->form_validation->set_rules('anime','Anime','required');
+            $this->form_validation->set_rules('thumbnail','Thumbnail','trim|required|max_length[128]');
+
             if($this->form_validation->run() == FALSE)
             {
-                $this->editAnime($animeid);
+                $this->editEpisode($episodeid);
             }
             else
             {
-                $title = ucwords(strtolower($this->security->xss_clean($this->input->post('title'))));
-                $view = $this->security->xss_clean($this->input->post('view'));
-                $sinopsis = $this->security->xss_clean($this->input->post('sinopsis'));
-                $status = $this->input->post('status');
-                $image = $this->security->xss_clean($this->input->post('image'));
-                $imgbackground = $this->security->xss_clean($this->input->post('imgbackground'));
-                $statusnum = 0;
-                if($status == NULL)
+                $title = $this->security->xss_clean($this->input->post('title'));
+                $episodenumber = $this->security->xss_clean($this->input->post('episodenumber'));
+                $anime = $this->security->xss_clean($this->input->post('anime'));
+                $thumbnail = $this->security->xss_clean($this->input->post('thumbnail'));
+
+                $episodeinfo = array(
+                    'title'=>$title,
+                    'episodenumber'=>$episodenumber,
+                    'anime'=>$anime,
+                    'thumbnail'=>$thumbnail
+                );
+                
+                $this->load->model('episode_model');
+                $result = $this->episode_model->edit_episode($episodeinfo, $episodeid);
+                
+                if($result > 0)
                 {
-                    $statusnum = 0;
+                    $this->session->set_flashdata('success', 'New Episode created successfully');
                 }
                 else
                 {
-                    $statusnum = 1;
-                }    
-                $animeinfo = array();
-                
-                $animeinfo = array('title'=>$title, 'sinopsis'=>$sinopsis, 'status'=>$statusnum, 'image'=>$image, 'imgbackground'=>$imgbackground, 'view'=>$view);
-                
-                $result = $this->anime_model->edit_anime($animeinfo, $animeid);
-                
-                if($result == true)
-                {
-                    $this->session->set_flashdata('success', 'Anime updated successfully');
-                    redirect('animes');
+                    $this->session->set_flashdata('error', 'Episode creation failed');
                 }
-                else
-                {
-                    $this->session->set_flashdata('error', 'Anime updation failed');
-                }
-                
-                
+                redirect('episode');
                 
             }
         }

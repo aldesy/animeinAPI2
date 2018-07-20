@@ -52,7 +52,7 @@
                       <td><?php echo $record->episodenumber ?></td>
                       <td><?php echo $record->title ?></td>
                       <td class="text-center">| 
-                          <a class="btn btn-sm btn-info" href="<?php echo base_url().'editAnime/'.$record->episodeid; ?>" title="Edit"><i class="fa fa-pencil"></i></a>
+                          <a class="btn btn-sm btn-info" href="<?php echo base_url().'episode/editEpisode/'.$record->episodeid; ?>" title="Edit"><i class="fa fa-pencil"></i></a>
                           <a class="btn btn-sm btn-danger deleteEpisode" href="#" data-episodeid="<?php echo $record->episodeid; ?>" title="Delete"><i class="fa fa-trash"></i></a>
                          
                   
