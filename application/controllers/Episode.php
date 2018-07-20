@@ -22,15 +22,19 @@ class Episode extends BaseController
         $this->isLoggedIn();   
     }
     
+    
+
     /**
      * This function used to load the first screen of the user
      */
     public function index()
     {
-       // $this->global['pageTitle'] = 'CodeInsect : Dashboard';
-        
-       // $this->loadViews("dashboard", $this->global, NULL , NULL);
-       if($this->isAdmin() == TRUE)
+     
+    }
+
+    public function load()
+    {
+        if($this->isAdmin() == TRUE)
         {
             $this->loadThis();
         }
@@ -52,7 +56,6 @@ class Episode extends BaseController
             $this->loadViews("episode/episodes", $this->global, $data, NULL);
         }
     }
-    
     
 
     /**
@@ -111,6 +114,7 @@ class Episode extends BaseController
             $this->form_validation->set_rules('episodenumber','Episode Number','trim|required|max_length[128]');
             $this->form_validation->set_rules('anime','Anime','required');
             $this->form_validation->set_rules('thumbnail','Thumbnail','trim|required|max_length[128]');
+            $this->form_validation->set_rules('streamlink','Stream Link','trim|required|max_length[128]');
 
             if($this->form_validation->run() == FALSE)
             {
@@ -122,12 +126,14 @@ class Episode extends BaseController
                 $episodenumber = $this->security->xss_clean($this->input->post('episodenumber'));
                 $anime = $this->security->xss_clean($this->input->post('anime'));
                 $thumbnail = $this->security->xss_clean($this->input->post('thumbnail'));
+                $streamlink = $this->security->xss_clean($this->input->post('streamlink'));
 
                 $episodeinfo = array(
                     'title'=>$title,
                     'episodenumber'=>$episodenumber,
                     'anime'=>$anime,
-                    'thumbnail'=>$thumbnail
+                    'thumbnail'=>$thumbnail,
+                    'streamlink'=>$streamlink
                 );
                 
                 $this->load->model('episode_model');
@@ -185,6 +191,7 @@ class Episode extends BaseController
             $this->form_validation->set_rules('episodenumber','Episode Number','trim|required|max_length[128]');
             $this->form_validation->set_rules('anime','Anime','required');
             $this->form_validation->set_rules('thumbnail','Thumbnail','trim|required|max_length[128]');
+            $this->form_validation->set_rules('streamlink','Stream Link','trim|required|max_length[128]');
 
             if($this->form_validation->run() == FALSE)
             {
@@ -196,12 +203,14 @@ class Episode extends BaseController
                 $episodenumber = $this->security->xss_clean($this->input->post('episodenumber'));
                 $anime = $this->security->xss_clean($this->input->post('anime'));
                 $thumbnail = $this->security->xss_clean($this->input->post('thumbnail'));
+                $streamlink = $this->security->xss_clean($this->input->post('streamlink'));
 
                 $episodeinfo = array(
                     'title'=>$title,
                     'episodenumber'=>$episodenumber,
                     'anime'=>$anime,
-                    'thumbnail'=>$thumbnail
+                    'thumbnail'=>$thumbnail,
+                    'streamlink'=>$streamlink
                 );
                 
                 $this->load->model('episode_model');
