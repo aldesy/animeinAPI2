@@ -10,7 +10,7 @@ $episodenumber = '';
 $anime = '';
 $title = 0;
 $thumbnail = '';
-
+$streamlink = '';
 if(!empty($episodeInfo))
 {
     foreach ($episodeInfo as $ef)
@@ -20,6 +20,7 @@ if(!empty($episodeInfo))
         $anime = $ef->anime;
         $title = $ef->title;
         $thumbnail = $ef->thumbnail;
+        $streamlink = $ef->streamlink;
     }
 }
 
@@ -98,6 +99,12 @@ if(!empty($episodeInfo))
                                     <div class="form-group">
                                         <label for="thumbnail">Thumbnail</label>
                                         <input type="text" class="form-control required" value="<?php echo $thumbnail; ?>" id="thumbnail" name="thumbnail" maxlength="128">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">                                
+                                    <div class="form-group">
+                                        <label for="streamlink">Stream Link</label>
+                                        <input type="text" class="form-control required" value="<?php echo $streamlink; ?>" id="streamlink" name="streamlink" maxlength="128">
                                     </div>
                                     
                                 </div>
